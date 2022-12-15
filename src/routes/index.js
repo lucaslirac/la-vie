@@ -19,11 +19,7 @@ routes.delete('/pacientes/:id', pacientesController.deletarPacientes)
 
 routes.get('/psicologos', requestLog, psicologosController.listarPsicologos)
 routes.get('/psicologos/:id', psicologosController.listarPsicologosId)
-routes.post(
-  '/psicologos',
-  PsicologosCreateValidation,
-  psicologosController.cadastrarPsicologos
-)
+routes.post('/psicologos', PsicologosCreateValidation,psicologosController.cadastrarPsicologos)
 routes.put('/psicologos/:id', psicologosController.atualizarPsicologos)
 routes.delete('/psicologos/:id', psicologosController.deletarPsicologos)
 

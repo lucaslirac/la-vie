@@ -4,7 +4,7 @@ const { DataTypes } = require("sequelize");
 const Psicologos = db.define(
   "Psicologos",
   {
-    id: {
+    psicologo_id : {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
@@ -32,7 +32,8 @@ const Psicologos = db.define(
     },
   },
   {
-    tableName: "psicologo",
+    tableName: "psicologos",
+    timestamps: false,
   }
 );
 

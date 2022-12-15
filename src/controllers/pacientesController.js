@@ -15,9 +15,9 @@ const pacientesController = {
   async listarPacientesId(req, res) {
     try {
       const { id } = req.params
-      const listaPaciente = await Paciente.findAll({
+      const listaPaciente = await Paciente.findOne({
         where: {
-          id: id
+          paciente_id: id
         }
       })
 
@@ -87,7 +87,7 @@ const pacientesController = {
       const { id } = req.params
       const deletar = await Paciente.destroy({
         where: {
-          id: id
+          paciente_id: id
         }
       })
 
@@ -97,6 +97,7 @@ const pacientesController = {
         res.sendStatus(204)
       }
     } catch (error) {
+      console.log(error)
       res.status(404).json({ error })
     }
   }

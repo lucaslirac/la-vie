@@ -1,10 +1,13 @@
-const { Atendimentos, Psicologo } = require('../models')
+const { Atendimentos, Psicologos, Paciente} = require('../models')
+
+const base64 = require("base-64")
+const utf8 = require("utf8")
 
 const atendimentosController = {
   listarAtendimentos: async (req, res) => {
     try {
       const listaAtendimentos = await Atendimentos.findAll({
-        include: Psicologo
+        include: Psicologos, Paciente,
       })
 
       return res.status(200).json(listaAtendimentos)
@@ -30,11 +33,16 @@ const atendimentosController = {
   cadastrarAtendimento: async (req, res) => {
     console.log(req.auth)
 
-    const { data_atendimento, observacao, psicologo_id, paciente_id } = req.body
+    const { data_atendimento, observacao, id_paciente } = req.body
     try {
+      const encoded = req.headers.authorization.slice(7).split(".")
+            const bytes = base64.decode(encoded[1]);
+            const text = utf8.decode(bytes);
+            const id_psicologo = JSON.parse(text).id;
+
       const novoAtendimento = await Atendimentos.create({
-        psicologo_id,
-        paciente_id,
+        id_paciente,
+        id_psicologo,
         data_atendimento,
         observacao
       })

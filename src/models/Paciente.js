@@ -1,8 +1,8 @@
 const db = require("../database");
 const { DataTypes } = require("sequelize");
 
-const Paciente = db.define("paciente", {
-  id: {
+const Paciente = db.define("Pacientes", {
+  paciente_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -20,7 +20,12 @@ const Paciente = db.define("paciente", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-});
+},
+  {
+    tableName: "pacientes",
+    timestamps: false,
+  }
+);
 
 // Paciente.sync()
 

@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const psicologosController = {
   listarPsicologos: async (req, res) => {
     try {
-      const listaPsicologos = await Psicologos.findAll()
+      const listaPsicologos = await Psicologos.findAll({attributes : ["psicologo_id", "nome", "email", "apresentacao"],})
       res.status(200).json(listaPsicologos)
     } catch (error) {
       console.log(error)
@@ -17,9 +17,10 @@ const psicologosController = {
   async listarPsicologosId(req, res) {
     try {
       const { id } = req.params
-      const listaDePsicologos = await Psicologos.findAll({
+      const listaDePsicologos = await Psicologos.findOne({
+        attributes : ["psicologo_id", "nome", "email", "apresentacao"],
         where: {
-          id
+          psicologo_id: id
         }
       })
 
@@ -29,7 +30,8 @@ const psicologosController = {
         res.status(200).json(listaDePsicologos)
       }
     } catch (error) {
-      res.status(404).json({ error })
+      
+      res.status(500).json({ error })
     }
   },
 
@@ -62,18 +64,15 @@ const psicologosController = {
 
     if (!id) return res.status(400).json('Erro na solicitação')
 
-    const newSenha = bcrypt.hashSync(senha, 10)
-
     const psicologoAtualizado = await Psicologos.update(
       {
         nome,
         email,
-        senha: newSenha,
         apresentacao
       },
       {
         where: {
-          id
+          psicologo_id: id
         }
       }
     )
@@ -86,7 +85,7 @@ const psicologosController = {
       const { id } = req.params
       const deletandoPsicologo = await Psicologos.destroy({
         where: {
-          id
+          psicologo_id: id
         }
       })
       if (!deletandoPsicologo) {
@@ -95,7 +94,8 @@ const psicologosController = {
         res.sendStatus(204)
       }
     } catch (error) {
-      return res.status(400).json({ error })
+      console.log(error)
+      return res.status(404).json({ error })
     }
   }
 }

@@ -14,12 +14,12 @@ const AuthController = {
             return res.status(400).json("“E-mail ou senha inválido, verifique e tente novamente.");
         }
         const token = jwt.sign({
-           id: psicologo.id,
+           id: psicologo.psicologo_id,
            email: psicologo.email,
            nome: psicologo.nome 
         },
         secret.key);
-        return res.json(token);
+        return res.status(200).json(token);
     },
 }
 module.exports = AuthController;
